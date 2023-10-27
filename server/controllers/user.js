@@ -73,6 +73,9 @@ const searchUsers = async (req, res) => {
       },
       include: [
         {
+          model: database.keywords
+        },
+        {
           model: database.keywords,
           where: {
             name: keywords
@@ -80,10 +83,25 @@ const searchUsers = async (req, res) => {
               : { [Op.not]: null }
           }
         }
-      ]
+      ],
     })
 
-    res.json(items)
+    if (items) {
+      const findResult = await database.user.findAll({
+        where: {
+          id: {[Op.in]: items.map(item => item.id)}
+        },
+        include: [
+          {
+            model: database.keywords,
+            attributes: ['id', 'name']
+          }
+        ]
+      })
+      res.json(findResult)
+    } else {
+      console.log("not found");
+    }
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' })
   }
