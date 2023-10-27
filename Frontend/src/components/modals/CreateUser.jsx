@@ -84,12 +84,20 @@ const CreateUser = ({ render, setRender }) => {
             hasFeedback
           >
             <Input
-              value={lastName}
+              keywords={lastName}
               onChange={e => setLastName(e.target.value)}
               className='modal_input'
             />
           </Form.Item>
-          <Form.Item label='Keywords' name='keywords'>
+          <Form.Item
+            label='Keywords'
+            name='keywords'
+            rules={
+              keywords.length > 0
+                ? [{ required: false }]
+                : [{ required: true }]
+            }
+          >
             <Keywords
               keywords={keywords}
               setKeywords={setKeywords}

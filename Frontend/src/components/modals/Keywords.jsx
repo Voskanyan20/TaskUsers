@@ -57,7 +57,7 @@ const Keywords = ({ keywords, setKeywords }) => {
   }
   return (
     <Space size={[0, 8]} wrap>
-      {keywords.map((tag, index) => {
+      {keywords && keywords.map((tag, index) => {
         if (editInputIndex === index) {
           return (
             <Input
@@ -65,7 +65,7 @@ const Keywords = ({ keywords, setKeywords }) => {
               key={tag}
               size='small'
               style={tagInputStyle}
-              value={editInputValue}
+              value={keywords}
               onChange={handleEditInputChange}
               onBlur={handleEditInputConfirm}
               onPressEnter={handleEditInputConfirm}
